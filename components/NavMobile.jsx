@@ -76,6 +76,7 @@ const NavMobile = ({ containerStyles, linkStyles, iconStyles }) => {
 					<div className='flex flex-col gap-y-8'>
 						{links.map((link, index) => (
 							<ScrollLink
+								onClick={() => setIsOpen(!isOpen)}
 								key={index}
 								to={link.path}
 								offset={link.offset}

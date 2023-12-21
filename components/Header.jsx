@@ -12,18 +12,28 @@ import { Button } from './ui/button';
 
 const Header = () => {
 	const [active, setActive] = useState(false);
+	const [isMobile, setIsMobile] = useState(false);
 
 	useEffect(() => {
+		setIsMobile(window.innerWidth < 768);
 		const handleScroll = () => {
 			// detect scroll
 			setActive(window.scrollY > 100);
 		};
+
+		const handleResize = () => {
+			setTimeout(() => {
+				setIsMobile(window.innerWidth < 768);
+			}, 1000);
+		};
 		// add event listener
 		window.addEventListener('scroll', handleScroll);
+		window.addEventListener('resize', handleResize);
 
 		// clear event listener
 		return () => {
 			window.removeEventListener('scroll', handleScroll);
+			window.removeEventListener('resize', handleResize);
 		};
 	}, []);
 
@@ -50,7 +60,11 @@ const Header = () => {
 						linkStyles='capitalize'
 					/>
 					{/** btn */}
-					<ScrollLink to='reservation' smooth={true}>
+					<ScrollLink
+						to='reservation'
+						smooth={true}
+						offset={isMobile ? -150 : 0}
+					>
 						<Button variant='orange' size='sm'>
 							Book a table
 						</Button>
